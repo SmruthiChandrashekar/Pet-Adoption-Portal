@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adoptions List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('bgadoption.jpg'); 
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+
+    .navbar {
+      background-color: rgba(255, 248, 220, 0.95);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #a0522d;
+    }
+
+    .navbar h2 {
+      margin: 0;
+      color: #4a2c0a;
+    }
+
+    .navbar a {
+      color: #8b4513;
+      margin-left: 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      color: #4a2c0a;
+      background-color: rgba(255, 248, 220, 0.9);
+      margin: 0;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: rgba(245, 245, 220, 0.9); 
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: brown;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #a0522d;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f5deb3;
+      color: #4b2e0f;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fff8dc;
+    }
+
+    a {
+      color: #8b4513;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar a {
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h2>Pet Adoption Portal</h2>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="showprofile.html">Profile</a>
+      
+    </div>
+  </div>
+
+  <h1>Adoptions List</h1>
+
+  <div class="table-container">
+    <table id="adoptions-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Pet Name</th>
+          <th>Age</th>
+          <th>Breed</th>
+          <th>Date</th>
+          <th>Full Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be populated here dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchAdoptions() {
+      try {
+        const response = await fetch('/api/adoptions');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const adoptions = await response.json();
+
+        const tbody = document.querySelector('#adoptions-table tbody');
+        tbody.innerHTML = '';
+
+        if (adoptions.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No adoption records found.</td></tr>';
+          return;
+        }
+
+        adoptions.forEach(item => {
+          const tr = document.createElement('tr');
+       tr.innerHTML = `
+  <td>${item.aid}</td>
+  <td>${item.pname}</td>
+  <td>${item.age}</td>
+  <td>${item.breed}</td>
+  <td>${new Date(item.date).toLocaleDateString()}</td>
+  <td>${item.full_name}</td>
+  <td>${item.phone || ''}</td>
+  <td>${item.email}</td>
+  <td>
+    ${
+      item.status === 'Adopted'
+        ? item.status
+        : `<a href="confirm.html?adoptionId=${item.aid}&petName=${item.pname}&user=${item.email}">${item.status || 'Confirm Adoption'}</a>`
+    }
+  </td>
+`;
+
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('Failed to fetch adoptions:', error);
+        const tbody = document.querySelector('#adoptions-table tbody');
+        tbody.innerHTML = '<tr><td colspan="9" style="color:red; text-align:center;">Failed to load data.</td></tr>';
+      }
+    }
+
+    fetchAdoptions();
+  </script>
+</body>
+</html>
