@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Show Profile</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    body {
+      position: relative;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('homebg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: brightness(0.4);
+      z-index: -1;
+    }
+
+    header {
+      background-color: rgba(27, 23, 22, 0.9);
+      padding: 15px 40px;
+      color: #f5f5dc; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    footer {
+      background-color: rgba(27, 23, 22, 0.9);
+      color: #f5f5dc;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .headingg {
+      font-size: 2rem;
+      font-family: Georgia, serif;
+      color: #f5f5dc;
+    }
+
+    .logout-btn,
+    .adopt-btn {
+      background-color: #5c4033; 
+      color: #f5f5dc; 
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-left: 10px;
+      display: inline-block;
+    }
+
+    .logout-btn:link,
+    .logout-btn:visited,
+    .logout-btn:hover,
+    .logout-btn:active,
+    .adopt-btn:link,
+    .adopt-btn:visited,
+    .adopt-btn:hover,
+    .adopt-btn:active {
+      color: #f5f5dc; 
+      background-color: #5c4033; 
+      text-decoration: none;
+    }
+
+    .logout-btn:hover,
+    .adopt-btn:hover {
+      background-color: #7b5e45; 
+    }
+
+    main {
+      flex-grow: 0;
+      flex-shrink: 1;
+      padding: 40px;
+      background-color: #ffffffbb; 
+      max-width: 600px;
+      margin: 80px auto 40px auto;
+      border-radius: 15px;
+      color: #342c28; 
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      text-align: center;
+      font-family: Georgia, serif;
+    }
+
+    .profile-info {
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    .profile-info strong {
+      color: #5c4033; 
+    }
+
+    
+    .adoptions-link:link,
+    .adoptions-link:visited,
+    .adoptions-link:hover,
+    .adoptions-link:active {
+      color: #5c4033; 
+      text-decoration: none;
+    }
+
+    .adoptions-link:hover {
+      text-decoration: underline;
+    }
+
+    .adoptions-link {
+      display: block;
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="headingg">Show Profile</div>
+    <div>
+      <a href="/home" class="adopt-btn">Home</a>
+      <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Your Profile Information</h2>
+    <div class="profile-info" id="profile-info">
+      <!-- User info will be inserted here -->
+    </div>
+    <a href="/adoptions" class="adoptions-link">View Your Adoptions</a>
+  </main>
+
+  <footer>
+    © 2025 Pet Adoption Portal
+  </footer>
+
+  <script>
+    async function fetchProfile() {
+      try {
+        const response = await fetch('/api/profile');
+        if (!response.ok) throw new Error('Failed to fetch profile');
+        const user = await response.json();
+
+        const infoDiv = document.getElementById('profile-info');
+        infoDiv.innerHTML = `
+          <p><strong>Name:</strong> ${user.name}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
+          <p><strong>Address:</strong> ${user.address || 'N/A'}</p>
+        `;
+      } catch (err) {
+        document.getElementById('profile-info').innerText = 'Failed to load profile info.';
+        console.error(err);
+      }
+    }
+
+    fetchProfile();
+  </script>
+</body>
+</html>

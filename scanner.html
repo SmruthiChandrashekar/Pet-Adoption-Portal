@@ -1,0 +1,36 @@
+<!-- scanner.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+</head>
+<body>
+  <h1>Scan to Pay</h1>
+  <p>Amount: ₹<span id="amount"></span></p>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay" alt="QR Code"/>
+  <br><br>
+  <button onclick="completePayment()">Mark as Paid</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const amount = params.get('amount');
+    const aid = params.get('aid');
+    const pet_id = params.get('pet_id');
+
+    document.getElementById("amount").innerText = amount;
+
+    function completePayment() {
+      fetch(`/api/complete-payment?aid=${aid}&pet_id=${pet_id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Payment successful! Pet adopted!");
+            window.location.href = "/adoptions"; // or homepage
+          } else {
+            alert("Payment failed.");
+          }
+        });
+    }
+  </script>
+</body>
+</html>
