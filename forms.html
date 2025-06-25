@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pet Adoption Form</title>
+  <style>
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(bgadoption.jpg);
+      background-size: cover;
+      background-position: center center;
+      color: #3D2B1F;
+      margin: 0;
+      padding: 30px 0;
+      background-attachment: fixed;
+    }
+
+    .form-container {
+      background-color:#dcd9d0;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #3D2B1F;
+    }
+
+    form > section {
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #dcd9d0;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: 5px;
+      border: 1px solid #dcd9d0;
+      font-size: 1rem;
+      color: #3D2B1F;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .radio-group, .yes-no-group {
+      margin-top: 6px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .radio-group label, .yes-no-group label {
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      background-color: #3D2B1F;
+      color:#dcd9d0;
+      font-size: 1.2rem;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5a4939;
+    }
+
+    .back-link {
+      display: block;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #3D2B1F;
+      text-decoration: none;
+      font-weight: bold;
+      background-color:#dcd9d0;
+      padding: 10px;
+      border-radius: 6px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-description {
+      font-style: italic;
+      color: #6a5d4d;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+    <a href="javascript:void(0);" class="back-link" onclick="history.back()">&larr; Back to Search</a>
+
+  <div class="form-container">
+    <h1>Pet Adoption Form</h1>
+    <form id="adoption-form">
+
+      <!-- Section 1 -->
+      <section>
+        <h2>Pet's Information</h2>
+        <p class="section-description">Please fill out the pet's details.</p>
+        <label for="pname">Pet Name:</label>
+        <input type="text" id="pname" name="pname" required>
+
+        <label for="age">Age <sup>*</sup></label>
+        <input type="number" id="age" name="age" min="0" required />
+
+        <label for="breed">Breed <sup>*</sup></label>
+        <input type="text" id="breed" name="breed" required />
+
+        <label for="date">Date of Adoption <sup>*</sup></label>
+        <input type="date" id="date" name="date" required />
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <h2>Adopter's Information</h2>
+        <p class="section-description">(Optional description can go here)</p>
+
+        <label for="fullName">Full Name <sup>*</sup></label>
+        <input type="text" id="fullName" name="fullName" required />
+
+        <label for="address">Address <sup>*</sup></label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="phone">Phone no. <sup>*</sup></label>
+        <input type="text" id="phone" name="phone" pattern="^[0-9\-+\s()]{7,15}$" required
+               placeholder="e.g., +1234567890" />
+
+        <label for="email">Email <sup>*</sup></label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="occupation">Occupation and Work Schedule <sup>*</sup></label>
+        <textarea id="occupation" name="occupation" required></textarea>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <h2>Home Environment</h2>
+        <p class="section-description">(Optional description can go here)</p>
+
+        <label>Do you live in a house, apartment, or condo? <sup>*</sup></label>
+        <div class="radio-group">
+          <label><input type="radio" name="homeType" value="House" required /> House</label>
+          <label><input type="radio" name="homeType" value="Apartment" /> Apartment</label>
+          <label><input type="radio" name="homeType" value="Other" /> Other</label>
+        </div>
+
+        <label>Do you have a yard? Is it fenced? <sup>*</sup></label>
+        <div class="yes-no-group">
+          <label><input type="radio" name="yardFenced" value="Yes" required /> Yes</label>
+          <label><input type="radio" name="yardFenced" value="No" /> No</label>
+        </div>
+
+        <label for="householdCount">How many people live in your household? <sup>*</sup></label>
+        <input type="number" id="householdCount" name="householdCount" min="1" required />
+
+        <label for="childrenAges">Are there children in your home? If yes, what are their ages? <sup>*</sup></label>
+        <textarea id="childrenAges" name="childrenAges" required></textarea>
+
+        <label for="otherPets">Do you have any other pets? <sup>*</sup></label>
+        <textarea id="otherPets" name="otherPets" required></textarea>
+
+        <label for="reason">Why are you interested in adopting this pet? <sup>*</sup></label>
+        <textarea id="reason" name="reason" required></textarea>
+
+        <label>Are you open to a home visit or follow-up? <sup>*</sup></label>
+        <div class="yes-no-group">
+          <label><input type="radio" name="homeVisit" value="Yes" required /> Yes</label>
+          <label><input type="radio" name="homeVisit" value="No" /> No</label>
+        </div>
+      </section>
+
+      <button type="submit">Submit Adoption Request</button>
+    </form>
+  </div>
+
+  <script>
+  // Robust URL query parameter parsing
+  function getQueryParams() {
+    const params = {};
+    const searchParams = new URLSearchParams(window.location.search);
+    for (const [key, value] of searchParams.entries()) {
+      params[key] = value;  // decoded automatically
+    }
+    return params;
+  }
+
+  window.onload = function () {
+    const params = getQueryParams();
+    if(params.pname){
+      const pnameInput = document.getElementById("pname");
+      pnameInput.value = params.pname;
+    }
+
+    if (params.age) {
+      const ageInput = document.getElementById("age");
+      ageInput.value = params.age;
+    }
+    if (params.breed) {
+      const breedInput = document.getElementById("breed");
+      breedInput.value = params.breed;
+    }
+    if (params.date) {
+      const dateInput = document.getElementById("date");
+      const date = new Date(params.date);
+      if (!isNaN(date.getTime())) {
+        const yyyy = date.getFullYear();
+        const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+        const dd = ('0' + date.getDate()).slice(-2);
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+      } else {
+        dateInput.value = params.date;
+      }
+    }
+  };
+
+
+
+
+    const form = document.getElementById('adoption-form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        pname: form.pname.value.trim(),
+        age: parseInt(form.age.value),
+        breed: form.breed.value.trim(),
+        date: form.date.value,
+        full_name: form.fullName.value.trim(),
+        address: form.address.value.trim(),
+        phone: form.phone.value.trim(),
+        email: form.email.value.trim(),
+        occupation: form.occupation.value.trim(),
+        homeType: form.homeType.value,
+        yardFenced: form.yardFenced.value,
+        householdCount: parseInt(form.householdCount.value),
+        childrenAges: form.childrenAges.value.trim(),
+        otherPets: form.otherPets.value.trim(),
+        reason: form.reason.value.trim(),
+        homeVisit: form.homeVisit.value,
+      };
+
+      try {
+        const response = await fetch('/api/adopt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          alert('Adoption request submitted successfully!');
+          form.reset();
+          window.location.href = '/home';
+        } else {
+          const text = await response.text();
+          alert('Submission failed: ' + text);
+        }
+      } catch (err) {
+        alert('Network error. Please try again later.');
+      }
+    });
+  </script>
+</body>
+</html>
